@@ -194,15 +194,15 @@ SOCIALACCOUNT_PROVIDERS = {
 
         "OAUTH_PKCE_ENABLED": True,
 
-        # "APP": {
+        "APP": {
 
-        #     "client_id": config("GOOGLE_CLIENT_ID"),
+            "client_id": config("GOOGLE_CLIENT_ID"),
 
-        #     "secret": config("GOOGLE_CLIENT_SECRET"),
+            "secret": config("GOOGLE_CLIENT_SECRET"),
 
-        #     "key": "",
+            "key": "",
 
-        # },
+        },
 
     }
 
