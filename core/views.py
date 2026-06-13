@@ -37,7 +37,8 @@ def post_login(request):
         return redirect('dashboard')
     else:
         # Landing page will read ?show=payment and open the modal
-        return redirect('/?show=payment')
+        return redirect('/')
+        # return redirect('/?show=payment')
 
 
 @login_required
