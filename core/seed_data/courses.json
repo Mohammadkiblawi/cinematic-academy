@@ -1,0 +1,302 @@
+[
+  {
+    "id": 0,
+    "title": "Mastering Camera Movement",
+    "breadTitle": "Mastering Camera Movement",
+    "tag": "Cinematography",
+    "tagClass": "tag-cinemato",
+    "level": "Intermediate",
+    "desc": "Master the art of dynamic camera movement with hands-on techniques.",
+    "rating": "4.9",
+    "ratingCount": "(2,847 ratings)",
+    "students": "12,450 students enrolled",
+    "hours": "8 hours total",
+    "instructor": "Sarah Chen",
+    "instrInitials": "SC",
+    "instrAv": "av-purple",
+    "duration": "8h 30m",
+    "lessonsCount": 32,
+    "lessonsCompleted": 21,
+    "totalLessons": 32,
+    "progress": 65,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&q=80",
+    "heroBg": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1400&q=80",
+    "curriculum": [
+      {
+        "title": "Introduction to Cinematography",
+        "lessons": [
+          {"name": "Welcome to the Course", "dur": "5:30", "durSec": 330, "status": "done", "img": "https://plus.unsplash.com/premium_photo-1682125771198-f7cbed7cb868?q=80&w=1160"},
+          {"name": "Understanding Your Camera", "dur": "12:45", "durSec": 765, "status": "done", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Lens Basics", "dur": "15:20", "durSec": 920, "status": "play", "img": "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Lighting Fundamentals",
+        "lessons": [
+          {"name": "Introduction to Three-Point Lighting", "dur": "12:34", "durSec": 754, "status": "play", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Natural vs. Artificial Light", "dur": "18:22", "durSec": 1102, "status": "play", "img": "https://images.unsplash.com/photo-1559154132-6d27bd0c65b0?q=80&w=871"},
+          {"name": "Working with Shadows", "dur": "15:45", "durSec": 945, "status": "play", "img": "https://plus.unsplash.com/premium_photo-1722764877809-6af1e98f6abf?q=80&w=870"}
+        ]
+      },
+      {
+        "title": "Advanced Techniques",
+        "lessons": [
+          {"name": "Dynamic Camera Movement", "dur": "20:10", "durSec": 1210, "status": "lock", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"},
+          {"name": "Working with Gimbals", "dur": "17:55", "durSec": 1075, "status": "lock", "img": "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=600&q=80"},
+          {"name": "Aerial Cinematography", "dur": "22:30", "durSec": 1350, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Advanced Color Grading Techniques",
+    "breadTitle": "Advanced Color Grading",
+    "tag": "Editing",
+    "tagClass": "tag-editing",
+    "level": "Advanced",
+    "desc": "Dive deep into professional color grading workflows.",
+    "rating": "4.8",
+    "ratingCount": "(1,923 ratings)",
+    "students": "9,870 students enrolled",
+    "hours": "6 hours total",
+    "instructor": "Marcus Rodriguez",
+    "instrInitials": "MR",
+    "instrAv": "av-teal",
+    "duration": "6h 45m",
+    "lessonsCount": 28,
+    "lessonsCompleted": 12,
+    "totalLessons": 28,
+    "progress": 42,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1716471330459-063b3baf247e?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "heroBg": "https://images.unsplash.com/photo-1716471330459-063b3baf247e?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "curriculum": [
+      {
+        "title": "Color Theory Foundations",
+        "lessons": [
+          {"name": "Understanding Color Science", "dur": "8:20", "durSec": 500, "status": "done", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"},
+          {"name": "Color Wheels & Vectors", "dur": "11:15", "durSec": 675, "status": "done", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Reading Scopes & Waveforms", "dur": "14:30", "durSec": 870, "status": "play", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "DaVinci Resolve Workflow",
+        "lessons": [
+          {"name": "Node-Based Color Grading", "dur": "16:00", "durSec": 960, "status": "play", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"},
+          {"name": "Working with LUTs", "dur": "12:45", "durSec": 765, "status": "play", "img": "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=600&q=80"},
+          {"name": "Power Windows & Masking", "dur": "18:10", "durSec": 1090, "status": "lock", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Cinematic Looks",
+        "lessons": [
+          {"name": "Recreating Film Stocks", "dur": "22:00", "durSec": 1320, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Teal & Orange Mastery", "dur": "19:30", "durSec": 1170, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Delivering Your Grade", "dur": "10:45", "durSec": 645, "status": "lock", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Scene Composition & Blocking",
+    "breadTitle": "Scene Composition & Blocking",
+    "tag": "Directing",
+    "tagClass": "tag-directing",
+    "level": "Intermediate",
+    "desc": "Learn how top directors plan and execute compelling scenes.",
+    "rating": "4.7",
+    "ratingCount": "(3,102 ratings)",
+    "students": "15,320 students enrolled",
+    "hours": "5 hours total",
+    "instructor": "Emily Watson",
+    "instrInitials": "EW",
+    "instrAv": "av-blue",
+    "duration": "5h 20m",
+    "lessonsCount": 24,
+    "lessonsCompleted": 21,
+    "totalLessons": 24,
+    "progress": 88,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=800&q=80",
+    "heroBg": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=1400&q=80",
+    "curriculum": [
+      {
+        "title": "Foundations of Composition",
+        "lessons": [
+          {"name": "Rule of Thirds", "dur": "9:00", "durSec": 540, "status": "done", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"},
+          {"name": "Leading Lines & Depth", "dur": "13:20", "durSec": 800, "status": "done", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Frame Within a Frame", "dur": "11:45", "durSec": 705, "status": "done", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Blocking Techniques",
+        "lessons": [
+          {"name": "Actor Blocking Basics", "dur": "15:30", "durSec": 930, "status": "done", "img": "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=600&q=80"},
+          {"name": "Camera & Actor Sync", "dur": "18:00", "durSec": 1080, "status": "done", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"},
+          {"name": "Rehearsal Strategies", "dur": "14:20", "durSec": 860, "status": "play", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Advanced Scene Direction",
+        "lessons": [
+          {"name": "Emotional Scene Pacing", "dur": "20:15", "durSec": 1215, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Long-Take Choreography", "dur": "25:00", "durSec": 1500, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Final Capstone Project", "dur": "30:00", "durSec": 1800, "status": "lock", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Natural Light Cinematography",
+    "breadTitle": "Natural Light Cinematography",
+    "tag": "Cinematography",
+    "tagClass": "tag-cinemato",
+    "level": "Beginner",
+    "desc": "Harness the power of natural light for stunning visuals.",
+    "rating": "4.6",
+    "ratingCount": "(1,204 ratings)",
+    "students": "8,230 students enrolled",
+    "hours": "9 hours total",
+    "instructor": "David Kim",
+    "instrInitials": "DK",
+    "instrAv": "av-green",
+    "duration": "9h 15m",
+    "lessonsCount": 36,
+    "lessonsCompleted": 5,
+    "totalLessons": 36,
+    "progress": 15,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&q=80",
+    "heroBg": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=1400&q=80",
+    "curriculum": [
+      {
+        "title": "Understanding Natural Light",
+        "lessons": [
+          {"name": "Golden Hour Shooting", "dur": "14:20", "durSec": 860, "status": "done", "img": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&q=80"},
+          {"name": "Overcast & Diffused Light", "dur": "11:45", "durSec": 705, "status": "play", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Harsh Midday Sun", "dur": "13:30", "durSec": 810, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Reflectors & Diffusers",
+        "lessons": [
+          {"name": "Using Reflectors On-Set", "dur": "16:00", "durSec": 960, "status": "lock", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"},
+          {"name": "DIY Diffusion Techniques", "dur": "12:00", "durSec": 720, "status": "lock", "img": "https://images.unsplash.com/photo-1497015289639-54688650d173?w=600&q=80"},
+          {"name": "Combining Natural & Artificial", "dur": "18:30", "durSec": 1110, "status": "lock", "img": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Location Scouting",
+        "lessons": [
+          {"name": "Reading a Location", "dur": "10:45", "durSec": 645, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Time of Day Planning", "dur": "14:00", "durSec": 840, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Weather & Mood", "dur": "11:20", "durSec": 680, "status": "lock", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Audio for Film Production",
+    "breadTitle": "Audio for Film Production",
+    "tag": "Sound Design",
+    "tagClass": "tag-sound",
+    "level": "Intermediate",
+    "desc": "Professional sound recording, mixing, and design for film.",
+    "rating": "4.8",
+    "ratingCount": "(987 ratings)",
+    "students": "6,540 students enrolled",
+    "hours": "7 hours total",
+    "instructor": "Lisa Martinez",
+    "instrInitials": "LM",
+    "instrAv": "av-pink",
+    "duration": "7h 40m",
+    "lessonsCount": 30,
+    "lessonsCompleted": 17,
+    "totalLessons": 30,
+    "progress": 55,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80",
+    "heroBg": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1400&q=80",
+    "curriculum": [
+      {
+        "title": "Sound Recording Fundamentals",
+        "lessons": [
+          {"name": "Microphone Types & Placement", "dur": "13:00", "durSec": 780, "status": "done", "img": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80"},
+          {"name": "Boom Operation Techniques", "dur": "15:30", "durSec": 930, "status": "done", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Wireless Lavalier Setup", "dur": "11:20", "durSec": 680, "status": "play", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "On-Set Sound",
+        "lessons": [
+          {"name": "Recording Dialogue Cleanly", "dur": "14:45", "durSec": 885, "status": "play", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"},
+          {"name": "Managing Background Noise", "dur": "12:30", "durSec": 750, "status": "lock", "img": "https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?w=600&q=80"},
+          {"name": "Timecode & Sync", "dur": "10:00", "durSec": 600, "status": "lock", "img": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Post-Production Audio",
+        "lessons": [
+          {"name": "Dialogue Editing in Premiere", "dur": "20:00", "durSec": 1200, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Sound Design & Foley", "dur": "22:30", "durSec": 1350, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Final Mix & Deliverables", "dur": "18:00", "durSec": 1080, "status": "lock", "img": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80"}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Narrative Editing Fundamentals",
+    "breadTitle": "Narrative Editing Fundamentals",
+    "tag": "Editing",
+    "tagClass": "tag-editing",
+    "level": "Beginner",
+    "desc": "Learn storytelling through editing – pacing, rhythm, and emotional impact.",
+    "rating": "4.5",
+    "ratingCount": "(2,341 ratings)",
+    "students": "11,800 students enrolled",
+    "hours": "6 hours total",
+    "instructor": "James Wilson",
+    "instrInitials": "JW",
+    "instrAv": "av-orange",
+    "duration": "6h 10m",
+    "lessonsCount": 26,
+    "lessonsCompleted": 8,
+    "totalLessons": 26,
+    "progress": 30,
+    "status": "inprogress",
+    "thumb": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&q=80",
+    "heroBg": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1400&q=80",
+    "curriculum": [
+      {
+        "title": "Editing Foundations",
+        "lessons": [
+          {"name": "The Cut: When & Why", "dur": "9:30", "durSec": 570, "status": "done", "img": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&q=80"},
+          {"name": "Continuity Editing Rules", "dur": "12:00", "durSec": 720, "status": "done", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Jump Cuts & Their Uses", "dur": "10:45", "durSec": 645, "status": "play", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Pacing & Rhythm",
+        "lessons": [
+          {"name": "Building Tension", "dur": "14:20", "durSec": 860, "status": "play", "img": "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80"},
+          {"name": "Emotional Pacing", "dur": "16:00", "durSec": 960, "status": "lock", "img": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&q=80"},
+          {"name": "Music & Edit Sync", "dur": "13:30", "durSec": 810, "status": "lock", "img": "https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?w=600&q=80"}
+        ]
+      },
+      {
+        "title": "Advanced Editing",
+        "lessons": [
+          {"name": "Montage Theory", "dur": "18:00", "durSec": 1080, "status": "lock", "img": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80"},
+          {"name": "Non-Linear Storytelling", "dur": "22:00", "durSec": 1320, "status": "lock", "img": "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=600&q=80"},
+          {"name": "Final Cut Delivery", "dur": "15:00", "durSec": 900, "status": "lock", "img": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&q=80"}
+        ]
+      }
+    ]
+  }
+]

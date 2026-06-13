@@ -1,0 +1,69 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ── Virtual environments ────────────────────────────────────
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# ── Environment variables / secrets ─────────────────────────
+.env
+.env.*
+*.env
+secrets.json
+
+# ── Django ───────────────────────────────────────────────────
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Media & static files (user uploads, collected static)
+/media/
+/staticfiles/
+/static_root/
+
+# Migrations (uncomment if you don't want to track them)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ── Celery ───────────────────────────────────────────────────
+celerybeat-schedule
+celerybeat.pid
+
+# ── Testing / coverage ──────────────────────────────────────
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# ── Frontend / Node (if using npm for assets) ───────────────
+node_modules/
+npm-debug.log*
+
+# ── Editor / IDE ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS files ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Build / dist ─────────────────────────────────────────────
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ── PayPal / payment sandbox logs ───────────────────────────
+*.sandbox.log

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Cinematic Academy – Dashboard</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-header">
+    <div class="notif-header-left"><span class="notif-header-title">Notifications</span><span class="notif-count-badge" id="notifCountBadge">3</span></div>
+    <button class="mark-all-btn" onclick="markAllRead()">Mark all read</button>
+  </div>
+  <div class="notif-list">
+    <div class="notif-item" id="notif-0" onclick="readNotif(0)"><div class="notif-unread-dot"></div><div class="notif-icon-wrap ni-purple"><i class="fa-solid fa-play"></i></div><div class="notif-body"><div class="notif-text"><strong>New lesson available</strong> in Mastering Camera Movement</div><div class="notif-time"><i class="fa-regular fa-clock"></i> 2 minutes ago</div></div></div>
+    <div class="notif-item" id="notif-1" onclick="readNotif(1)"><div class="notif-unread-dot"></div><div class="notif-icon-wrap ni-gold"><i class="fa-solid fa-trophy"></i></div><div class="notif-body"><div class="notif-text"><strong>Achievement unlocked!</strong> Completed 80+ lessons</div><div class="notif-time"><i class="fa-regular fa-clock"></i> 1 hour ago</div></div></div>
+    <div class="notif-item" id="notif-2" onclick="readNotif(2)"><div class="notif-unread-dot"></div><div class="notif-icon-wrap ni-teal"><i class="fa-solid fa-certificate"></i></div><div class="notif-body"><div class="notif-text"><strong>Certificate ready</strong> for Advanced Color Grading</div><div class="notif-time"><i class="fa-regular fa-clock"></i> Yesterday</div></div></div>
+    <div class="notif-item read" id="notif-3" onclick="readNotif(3)"><div class="notif-unread-dot"></div><div class="notif-icon-wrap ni-red"><i class="fa-solid fa-fire"></i></div><div class="notif-body"><div class="notif-text"><strong>🔥 7-day streak!</strong> Keep going!</div><div class="notif-time"><i class="fa-regular fa-clock"></i> 2 days ago</div></div></div>
+  </div>
+  <div class="notif-empty" id="notifEmpty"><i class="fa-regular fa-bell-slash"></i><p>You're all caught up!</p></div>
+  <div class="notif-footer"><button class="notif-footer-btn" onclick="closeNotif()">View all notifications</button></div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fa-solid fa-film"></i></div>
+      <div class="logo-text"><span>The Cinematic</span><span>Academy</span></div>
+    </div>
+    <div class="sidebar-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search courses, lessons…" oninput="handleSearch(this)"/>
+   </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <a class="nav-item active" href="#" id="nav-dashboard"  onclick="navTo(event,'dashboard',this)"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a class="nav-item" href="#" id="nav-mycourses" onclick="navTo(event,'mycourses',this)"><i class="fa-solid fa-book-open"></i> My Courses</a>
+      <a class="nav-item" href="#" id="nav-lessons"   onclick="navTo(event,'lessons',this)"><i class="fa-solid fa-clapperboard"></i> Lessons</a>
+      <a class="nav-item" href="#" id="nav-progress" onclick="navTo(event,'progress',this)"><i class="fa-solid fa-chart-line"></i> Progress</a>
+      <div class="nav-label" style="margin-top:8px">Social</div>
+      <a class="nav-item" href="#" id="nav-community" onclick="navTo(event,'community',this)"><i class="fa-solid fa-users"></i> Community <span class="badge">3</span></a>
+      <a class="nav-item" href="#" id="nav-downloads" onclick="navTo(event,'downloads',this)"><i class="fa-solid fa-download"></i> Downloads</a>
+      <div class="nav-label" style="margin-top:8px">System</div>
+      <a class="nav-item" href="#" id="nav-settings" onclick="navTo(event,'settings',this)"><i class="fa-solid fa-gear"></i> Settings</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-info">
+        <div class="s-avatar">
+          {% if user_avatar_url %}
+            <img src="{{ user_avatar_url }}" alt="{{ user_full_name }}">
+          {% else %}
+            {{ user_initials }}
+          {% endif %}
+        </div>
+        <div class="user-details"><div class="user-name">{{ user_full_name }}</div></div>
+      </div>
+    <form id="logout-form" method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+    </form>
+      <a href="#" onclick="document.getElementById('logout-form').submit(); return false;" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> 
+        Logout
+      </a>  
+</div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+      <span class="topbar-title" id="topbarTitle">Dashboard</span>
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search courses, lessons…" oninput="handleSearch(this)"/>
+      </div>
+      <div class="topbar-actions">
+        <div class="icon-btn" id="notifBell" onclick="toggleNotif(event)">
+          <i class="fa-solid fa-bell"></i>
+          <div class="notif-dot" id="notifDot"></div>
+        </div>
+        <div class="topbar-avatar">{{ user_initials }}</div>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ══════════════════════════════════════════════
+           DASHBOARD
+      ══════════════════════════════════════════════ -->
+      <div class="page active" id="page-dashboard">
+        <section class="hero animate-up">
+          <div>
+            <div class="hero-welcome">Welcome Back, {{ user_full_name }}</div>
+            <h1 class="hero-title">Continue Your<br><em>Cinematic Journey</em></h1>
+            <p class="hero-sub">You're making excellent progress. Pick up where you left off.</p>
+            <div class="progress-wrap">
+              <div class="progress-label"><span>Overall Progress</span><span>{{ overall_progress }}%</span></div>
+              <div class="progress-bar"><div class="progress-fill" data-target="{{ overall_progress }}"></div></div>
+            </div>
+          </div>
+          <div class="hero-video" {% if current_course %}onclick="openCourse({{ current_course.id }})"{% endif %}>
+            {% if current_course %}
+              <img src="{{ current_course.thumbnail_url }}" alt="{{ current_course.title }}"/>
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&q=80" alt="Course preview"/>
+            {% endif %}
+            <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div><div class="video-label">Currently Watching</div>
+              <div class="video-title">{% if current_course %}{{ current_course.current_lesson_title }}{% else %}Browse your courses{% endif %}</div>
+              <div class="video-time">{% if current_course %}{{ current_course.current_lesson_duration }}{% else %}00:00{% endif %} remaining</div>
+            </div>
+          </div>
+        </section>
+        <div class="stats-grid">
+          <div class="stat-card animate-up delay-1"><div class="stat-icon purple"><i class="fa-solid fa-film"></i></div><div class="stat-number purple"><span class="count-up" data-target="{{ enrolled_course_count }}">0</span></div><div class="stat-label">Courses Enrolled</div></div>
+          <div class="stat-card animate-up delay-2"><div class="stat-icon teal"><i class="fa-regular fa-circle-check"></i></div><div class="stat-number teal"><span class="count-up" data-target="{{ completed_lessons }}">0</span></div><div class="stat-label">Lessons Completed</div></div>
+          <div class="stat-card animate-up delay-3"><div class="stat-icon gold"><i class="fa-regular fa-clock"></i></div><div class="stat-number gold"><span class="count-up" data-target="{{ hours_watched }}">0</span></div><div class="stat-label">Hours Watched</div></div>
+          <div class="stat-card animate-up delay-4"><div class="stat-icon blue"><i class="fa-solid fa-certificate"></i></div><div class="stat-number blue"><span class="count-up" data-target="{{ certificate_count }}">0</span></div><div class="stat-label">Certificates</div></div>
+        </div>
+        <section class="animate-up delay-2">
+          <div class="section-eyebrow">Continue Learning</div>
+          <div class="section-header">
+            <h2 class="section-title">My <em>Courses</em></h2>
+            <a class="view-all" href="#" onclick="navTo(event,'mycourses',document.getElementById('nav-mycourses'))">View All <i class="fa-solid fa-arrow-right" style="font-size:10px"></i></a>
+          </div>
+          <div class="courses-grid-dash">
+            {% if dashboard_courses %}
+              {% for course in dashboard_courses %}
+              <div class="dash-course-card">
+                <div class="thumb-wrap"><img class="course-thumb" src="{{ course.thumbnail_url|default:'https://images.unsplash.com/photo-1502209877429-d7c6df9eb3f9?q=80&w=866&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}" alt="{{ course.title }}"/></div>
+                <div class="course-body">
+                  <span class="course-tag {% if course.tag|lower == 'editing' %}tag-editing{% elif course.tag|lower == 'directing' %}tag-directing{% elif course.tag|lower == 'cinematography' %}tag-cinemato{% else %}tag-cinemato{% endif %}">{{ course.tag|default:'Course' }}</span>
+                  <div class="course-title-text">{{ course.title }}</div>
+                  <div class="instructor"><div class="instructor-avatar av-purple">{{ user_initials }}</div><span class="instructor-name">{{ course.instructor|default:'Instructor' }}</span></div>
+                  <div class="course-progress-label"><span>Progress</span><span>{{ course.progress }}%</span></div>
+                  <div class="course-bar"><div class="course-fill" data-target="{{ course.progress }}"></div></div>
+                  <button class="continue-btn" onclick="openCourse({{ course.id }})">Continue</button>
+                </div>
+              </div>
+              {% endfor %}
+            {% else %}
+              <div class="dash-course-card no-courses"><div class="course-body"><div class="course-title-text">No enrolled courses yet</div><p class="course-subtext">Enroll in a course to see your progress dashboard.</p></div></div>
+            {% endif %}
+          </div>
+        </section>
+        <section class="lesson-section animate-up delay-3" style="margin-top:36px">
+          <div class="section-eyebrow">Currently Watching</div>
+          <h2 class="section-title" style="margin-bottom:20px">Current <em>Lesson</em></h2>
+          <div class="video-player-wrap" onclick="toggleDashPlay()">
+            {% if current_course %}
+              <img src="{{ current_course.thumbnail_url }}" alt="{{ current_course.title }}"/>
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&q=80" alt="Course preview"/>
+            {% endif %}
+            <div class="player-overlay"><div class="big-play" id="dashBigPlay"><i class="fa-solid fa-play" id="dashPlayIcon"></i></div></div>
+            <div class="player-timeline"><div class="timeline-bar" onclick="dashSeek(event)"><div class="timeline-fill" id="dashTimelineFill"></div></div><div class="time-labels"><span id="dashCurrentTime">0:00</span><span>{% if current_course %}{{ current_course.current_lesson_duration }}{% else %}00:00{% endif %}</span></div></div>
+          </div>
+          <div class="curriculum"><div class="curriculum-label">Course Curriculum</div>
+            <div class="lesson-list">
+              {% if current_course and current_course.curriculum %}
+                {% for section in current_course.curriculum %}
+                  {% if section.title %}
+                    <div class="curriculum-section-title">{{ section.title }}</div>
+                  {% endif %}
+                  {% for lesson in section.lessons %}
+                    {% if lesson.status == 'lock' %}
+                      <div class="lesson-item {% if lesson.status == 'play' %}active{% endif %} {% if lesson.status == 'done' %}completed{% endif %}" onclick="showToast('fa-lock','Complete previous lessons first')">
+                    {% else %}
+                      <div class="lesson-item {% if lesson.status == 'play' %}active{% endif %} {% if lesson.status == 'done' %}completed{% endif %}" onclick="openLesson({{ current_course.id }}, {{ lesson.si }}, {{ lesson.li }})">
+                    {% endif %}
+                      <div class="lesson-status {% if lesson.status == 'done' %}ls-done{% elif lesson.status == 'play' %}ls-active{% else %}ls-locked{% endif %}">{% if lesson.status == 'done' %}<i class="fa-solid fa-check"></i>{% elif lesson.status == 'play' %}<i class="fa-solid fa-play"></i> {% elif lesson.status == 'lock' %} <i class="fa-solid fa-lock"></i> {% else %}{{ loop.index }}{% endif %}</div>
+                      <div class="lesson-info"><div class="lesson-name">{{ lesson.name }}</div><div class="lesson-dur">{{ lesson.dur }}</div></div>
+                      {% if lesson.status == 'done' %}<i class="fa-solid fa-check" style="color:var(--teal);font-size:12px"></i>{% endif %}
+                    </div>
+                  {% endfor %}
+                {% endfor %}
+              {% else %}
+                <div class="lesson-item no-lessons"><div class="lesson-info"><div class="lesson-name">No lessons available yet</div></div></div>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           MY COURSES
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-mycourses">
+        <div class="mc-header animate-up"><div class="mc-eyebrow">Your Learning Path</div><h1 class="mc-title">My Courses</h1><p class="mc-subtitle">Track your progress across all enrolled courses</p></div>
+        <div class="mc-stats animate-up delay-1">
+          <div class="mc-stat-card"><div class="mc-stat-number purple" id="mc-total">6</div><div class="mc-stat-label">Total Courses</div></div>
+          <div class="mc-stat-card"><div class="mc-stat-number gold" id="mc-inprogress">6</div><div class="mc-stat-label">In Progress</div></div>
+          <div class="mc-stat-card"><div class="mc-stat-number teal" id="mc-completed">0</div><div class="mc-stat-label">Completed</div></div>
+          <div class="mc-stat-card"><div class="mc-stat-number dim" id="mc-notstarted">0</div><div class="mc-stat-label">Not Started</div></div>
+        </div>
+        <div class="mc-filter-bar animate-up delay-2">
+          <div class="mc-filter-tabs">
+            <button class="mc-tab active" onclick="mcFilter('all',this)">All Courses</button>
+            <button class="mc-tab" onclick="mcFilter('inprogress',this)">In Progress</button>
+            <button class="mc-tab" onclick="mcFilter('completed',this)">Completed</button>
+          </div>
+          <div class="mc-spacer"></div>
+          <div class="mc-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search courses…" id="mcSearchInput" oninput="mcSearch(this)"/></div>
+        </div>
+        <div class="mc-grid animate-up delay-3" id="mcGrid"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           LESSONS LIBRARY
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-lessons">
+
+        <!-- Header -->
+        <div class="ll-header animate-up">
+          <div class="ll-eyebrow">All Lessons</div>
+          <h1 class="ll-title">Lessons Library</h1>
+          <p class="ll-subtitle">Access all your lessons across all courses</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="ll-stats animate-up delay-1">
+          <div class="ll-stat">
+            <div class="ll-stat-icon purple"><i class="fa-solid fa-book-open"></i></div>
+            <div class="ll-stat-num purple" id="ll-total">0</div>
+            <div class="ll-stat-label">Total Lessons</div>
+          </div>
+          <div class="ll-stat">
+            <div class="ll-stat-icon teal"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="ll-stat-num teal" id="ll-done">0</div>
+            <div class="ll-stat-label">Completed</div>
+          </div>
+          <div class="ll-stat">
+            <div class="ll-stat-icon gold"><i class="fa-regular fa-clock"></i></div>
+            <div class="ll-stat-num gold" id="ll-inprog">0</div>
+            <div class="ll-stat-label">In Progress</div>
+          </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="ll-filter-bar animate-up delay-2">
+          <div class="ll-tabs">
+            <button class="ll-tab active" onclick="llFilter('all',this)">All Lessons</button>
+            <button class="ll-tab" onclick="llFilter('completed',this)">Completed</button>
+            <button class="ll-tab" onclick="llFilter('inprogress',this)">In Progress</button>
+          </div>
+          <div class="ll-spacer"></div>
+          <div class="ll-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search lessons…" id="llSearchInput" oninput="llSearch(this)"/>
+          </div>
+          <button class="ll-filter-btn" onclick="llCycleSort()">
+            <i class="fa-solid fa-arrow-up-wide-short"></i>
+            <span id="llSortLabel">Sort: Default</span>
+          </button>
+        </div>
+
+        <!-- Lesson list -->
+        <div class="ll-list animate-up delay-3" id="llList"></div>
+
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           COURSE DETAIL
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-course">
+        <div class="cd-hero">
+          <div class="cd-hero-bg" id="cdHeroBg"></div>
+          <div class="cd-hero-overlay"></div>
+          <div class="cd-hero-content">
+            <div class="breadcrumb">
+              <a href="#" onclick="showPage('dashboard');setTopbar('Dashboard')">Dashboard</a>
+              <span class="sep">/</span>
+              <a href="#" id="cdBreadBack">My Courses</a>
+              <span class="sep">/</span>
+              <span class="current" id="cdBreadTitle"></span>
+            </div>
+            <div class="cd-tag" id="cdTag"></div>
+            <h1 class="cd-title" id="cdTitle"></h1>
+            <div class="cd-meta">
+              <div class="cd-meta-item"><div class="stars"><i class="fa-solid fa-star star"></i><i class="fa-solid fa-star star"></i><i class="fa-solid fa-star star"></i><i class="fa-solid fa-star star"></i><i class="fa-solid fa-star-half-stroke star"></i></div><span class="rating-val" id="cdRating"></span><span class="rating-count" id="cdRatingCount"></span></div>
+              <div class="cd-meta-item"><i class="fa-solid fa-users"></i><span id="cdStudents"></span></div>
+              <div class="cd-meta-item"><i class="fa-regular fa-clock"></i><span id="cdHours"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="cd-layout">
+          <div><h2 class="cd-curriculum-title">Course Curriculum</h2><p class="cd-curriculum-desc" id="cdDesc"></p><div class="accordion" id="accordion"></div></div>
+          <div>
+            <div class="cd-sidebar-card">
+              <div class="cs-thumb" id="csSideThumbWrap"><img id="cdSideThumb" src="" alt=""/><div class="cs-play-overlay"><div class="cs-play"><i class="fa-solid fa-play"></i></div></div></div>
+              <div class="cs-body">
+                <div class="cs-progress-label">Your Progress</div><div class="cs-pct" id="cdPct"></div>
+                <div class="cs-bar"><div class="cs-fill" id="csFill"></div></div>
+                <button class="cs-continue-btn" id="csContinueBtn">Continue Learning</button>
+                <div class="cs-download" onclick="showToast('fa-download','Preparing download…')"><i class="fa-solid fa-download"></i> Download Resources</div>
+                <div class="cs-divider"></div>
+                <div class="cs-meta-list">
+                  <div class="cs-meta-row"><span class="cs-meta-key">Instructor</span><span class="cs-meta-val" id="cdInstructor"></span></div>
+                  <div class="cs-meta-row"><span class="cs-meta-key">Duration</span><span class="cs-meta-val" id="cdDuration"></span></div>
+                  <div class="cs-meta-row"><span class="cs-meta-key">Lessons</span><span class="cs-meta-val" id="cdLessons"></span></div>
+                  <div class="cs-meta-row"><span class="cs-meta-key">Level</span><span class="cs-meta-val teal" id="cdLevel"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           LESSON DETAIL
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-lesson">
+        <div class="ld-video-section" id="ldVideoSection">
+          <div class="ld-breadcrumb" id="ldBreadcrumb"></div>
+          <img class="ld-video-bg" id="ldVideoBg" src="" alt=""/>
+          <div class="ld-play-overlay"><div class="ld-play-btn" id="ldPlayBtn" onclick="toggleLessonPlay()"><i class="fa-solid fa-play" id="ldPlayIcon"></i></div></div>
+          <div class="ld-timeline">
+            <div class="ld-bar-track" onclick="ldSeek(event)"><div class="ld-bar-fill" id="ldBarFill" style="width:45%"></div></div>
+            <div class="ld-time-row">
+              <div class="ld-controls">
+                <button class="ld-ctrl-btn" onclick="ldSkip(-10)"><i class="fa-solid fa-rotate-left"></i><span style="font-size:9px;margin-left:1px">10</span></button>
+                <button class="ld-ctrl-btn main-ctrl" onclick="toggleLessonPlay()"><i class="fa-solid fa-play" id="ldCtrlIcon"></i></button>
+                <button class="ld-ctrl-btn" onclick="ldSkip(10)"><i class="fa-solid fa-rotate-right"></i><span style="font-size:9px;margin-left:1px">10</span></button>
+                <span class="ld-time"><span id="ldCurrTime">5:34</span></span>
+                <div class="ld-volume"><button class="ld-ctrl-btn" onclick="toggleMute()"><i class="fa-solid fa-volume-high" id="ldVolIcon"></i></button><input class="ld-vol-slider" type="range" min="0" max="100" value="80" oninput="updateVolume(this)"/></div>
+              </div>
+              <div class="ld-spacer"></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="ld-time" id="ldDurTime">12:34</span>
+                <select class="ld-speed" onchange="changeSpeed(this)"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+                <button class="ld-ctrl-btn" onclick="showToast('fa-expand','Fullscreen mode')"><i class="fa-solid fa-expand"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ld-body">
+          <div>
+            <div class="ld-badge"><i class="fa-solid fa-clapperboard"></i><span id="ldBadgeText">LESSON 1 OF 32</span></div>
+            <h1 class="ld-title" id="ldTitle"></h1><p class="ld-desc" id="ldDesc"></p>
+            <div class="ld-cards">
+              <div class="ld-card"><div class="ld-card-title"><i class="fa-solid fa-book-open"></i> Lesson Notes</div><div class="note-list" id="ldNoteList"></div></div>
+              <div class="ld-card"><div class="ld-card-title"><i class="fa-solid fa-folder-open"></i> Resources</div><div class="resource-list" id="ldResourceList"></div></div>
+            </div>
+            <div class="ld-complete-card" id="ldCompleteCard" onclick="toggleComplete()">
+              <span class="ld-complete-label" id="ldCompleteLabel">Mark as complete</span>
+              <div class="ld-checkbox" id="ldCheckbox"><i class="fa-solid fa-check"></i></div>
+            </div>
+          </div>
+          <div class="ld-sidebar"><div class="ld-up-next-card"><div class="ld-up-next-header">Up Next</div><div class="up-next-list" id="ldUpNextList"></div></div></div>
+        </div>
+        <div class="ld-bottom-nav">
+          <button class="ld-nav-btn ld-prev-btn" id="ldPrevBtn" onclick="lessonNav(-1)"><i class="fa-solid fa-chevron-left"></i> Previous Lesson</button>
+          <div class="ld-dots" id="ldDots"></div>
+          <button class="ld-nav-btn ld-next-btn" id="ldNextBtn" onclick="lessonNav(1)">Next Lesson <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           PROGRESS
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-progress">
+        <!-- Header -->
+        <div class="prog-header animate-up">
+          <div class="prog-eyebrow">Your Learning Analytics</div>
+          <h1 class="prog-title">Progress <em>Tracking</em></h1>
+          <p class="prog-subtitle">Monitor your learning journey and celebrate milestones</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="prog-stats animate-up delay-1">
+           <div class="prog-stat">
+            <div class="prog-stat-icon teal"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="prog-stat-num teal"><span class="prog-count" data-target="{{completed_lessons}}">0</span></div>
+            <div class="prog-stat-label">Lessons Completed</div>
+            <div class="prog-stat-delta up"><i class="fa-solid fa-arrow-trend-up"></i>+12 this week</div>
+          </div>
+          <div class="prog-stat">
+            <div class="prog-stat-icon gold"><i class="fa-regular fa-clock"></i></div>
+            <div class="prog-stat-num gold"><span class="prog-count" data-target="{{hours_watched}}">0</span></div>
+            <div class="prog-stat-label">Hours Watched</div>
+            <div class="prog-stat-delta up"><i class="fa-solid fa-arrow-trend-up"></i>+18.5 this month</div>
+          </div>
+          <div class="prog-stat">
+            <div class="prog-stat-icon purple"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="prog-stat-num purple"><span class="prog-count" data-target="{{avg_completion_rate}}">0</span><span style="font-size:18px;font-weight:600;color:var(--purple-light)">%</span></div>
+            <div class="prog-stat-label">Avg. Completion Rate</div>
+            <div class="prog-stat-delta up"><i class="fa-solid fa-arrow-trend-up"></i>+5% since last month</div>
+          </div>
+          <div class="prog-stat">
+            <div class="prog-stat-icon blue"><i class="fa-solid fa-certificate"></i></div>
+            <div class="prog-stat-num blue"><span class="prog-count" data-target="{{certificate_count}}">0</span></div>
+            <div class="prog-stat-label">Certificates Earned</div>
+            <div class="prog-stat-delta neutral"><i class="fa-solid fa-award"></i>2 in progress</div>
+          </div>
+        </div>
+      
+        <!-- Course Progress -->
+        <section class="prog-courses-section animate-up delay-3">
+          <div class="section-eyebrow">Course By Course</div>
+          <div class="section-header" style="margin-bottom:20px">
+            <h2 class="section-title">Course <em>Progress</em></h2>
+          </div>
+          <div id="progCourseList"></div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="animate-up delay-4">
+          <div class="section-eyebrow">Your Credentials</div>
+          <div class="section-header" style="margin-bottom:20px">
+            <h2 class="section-title">Certificates <em>Earned</em></h2>
+          </div>
+          <div class="prog-certs-grid" id="progCertsGrid"></div>
+        </section>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           COMMUNITY
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-community">
+        <div class="comm-header animate-up">
+          <div class="comm-eyebrow">Connect &amp; Collaborate</div>
+          <h1 class="comm-title">Community Forum</h1>
+          <p class="comm-subtitle">Share insights, ask questions, and learn from fellow filmmakers</p>
+        </div>
+
+        <div class="comm-layout">
+          <!-- Main feed -->
+          <div>
+            <!-- Compose -->
+            <div class="comm-compose animate-up delay-1">
+              <div class="comm-compose-top">
+                <div class="comm-compose-avatar">{{ user_initials }}</div>
+                <textarea class="comm-compose-input" id="commComposeText" placeholder="Share your thoughts, questions, or insights…" rows="3"></textarea>
+              </div>
+              <div class="comm-compose-footer">
+                <select class="comm-cat-select" id="commCatSelect">
+                  <option value="">Select Category</option>
+                  <option value="cinematography">Cinematography</option>
+                  <option value="editing">Editing</option>
+                  <option value="directing">Directing</option>
+                  <option value="sound">Sound Design</option>
+                  <option value="general">General</option>
+                </select>
+                <div class="comm-spacer"></div>
+                <button class="comm-post-btn" onclick="submitPost()"><i class="fa-solid fa-paper-plane"></i> Post</button>
+              </div>
+            </div>
+
+            <!-- Filter tabs -->
+            <div class="comm-filter-bar animate-up delay-2">
+              <div class="comm-tabs">
+                <button class="comm-tab active" onclick="commFilter('all',this)">All Posts</button>
+                <button class="comm-tab" onclick="commFilter('trending',this)"><i class="fa-solid fa-arrow-trend-up" style="font-size:10px"></i> Trending</button>
+                <button class="comm-tab" onclick="commFilter('instructor',this)">Instructors</button>
+                <button class="comm-tab" onclick="commFilter('questions',this)">Questions</button>
+              </div>
+            </div>
+
+            <!-- Posts feed -->
+            <div id="commFeed" class="animate-up delay-3"></div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="animate-up delay-2">
+            <!-- Community stats -->
+            <div class="comm-sidebar-card">
+              <div class="comm-sidebar-title"><i class="fa-solid fa-users"></i> Community</div>
+              <div class="comm-stat-list">
+                <div class="comm-stat-item">
+                  <div class="comm-stat-val purple"><span class="comm-count" data-target="12450">0</span></div>
+                  <div class="comm-stat-lbl">Active Members</div>
+                </div>
+                <div class="comm-divider"></div>
+                <div class="comm-stat-item">
+                  <div class="comm-stat-val teal"><span class="comm-count" data-target="3284">0</span></div>
+                  <div class="comm-stat-lbl">Discussions</div>
+                </div>
+                <div class="comm-divider"></div>
+                <div class="comm-stat-item">
+                  <div class="comm-stat-val gold"><span class="comm-count" data-target="847">0</span></div>
+                  <div class="comm-stat-lbl">Online Now</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top Contributors -->
+            <div class="comm-sidebar-card">
+              <div class="comm-sidebar-title"><i class="fa-solid fa-medal"></i> Top Contributors</div>
+              <div class="comm-contrib-list">
+                <div class="comm-contrib-item">
+                  <div class="comm-contrib-rank"><i class="fa-solid fa-trophy" style="color:var(--gold)"></i></div>
+                  <div class="comm-contrib-avatar av-green">DK</div>
+                  <div class="comm-contrib-info"><div class="comm-contrib-name">David Kim</div><div class="comm-contrib-meta">142 posts · 1,240 likes</div></div>
+                </div>
+                <div class="comm-contrib-item">
+                  <div class="comm-contrib-rank"><i class="fa-solid fa-medal" style="color:#b0b0c0"></i></div>
+                  <div class="comm-contrib-avatar av-pink">LM</div>
+                  <div class="comm-contrib-info"><div class="comm-contrib-name">Lisa Martinez</div><div class="comm-contrib-meta">98 posts · 890 likes</div></div>
+                </div>
+                <div class="comm-contrib-item">
+                  <div class="comm-contrib-rank"><i class="fa-solid fa-medal" style="color:#cd7f32"></i></div>
+                  <div class="comm-contrib-avatar av-orange">JW</div>
+                  <div class="comm-contrib-info"><div class="comm-contrib-name">James Wilson</div><div class="comm-contrib-meta">76 posts · 654 likes</div></div>
+                </div>
+                <div class="comm-contrib-item">
+                  <div class="comm-contrib-rank"><i class="fa-regular fa-star" style="color:var(--gold)"></i></div>
+                  <div class="comm-contrib-avatar av-purple">SC</div>
+                  <div class="comm-contrib-info"><div class="comm-contrib-name">Sarah Chen</div><div class="comm-contrib-meta">65 posts · 520 likes</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Popular Topics -->
+            <div class="comm-sidebar-card">
+              <div class="comm-sidebar-title"><i class="fa-solid fa-hashtag"></i> Popular Topics</div>
+              <div class="comm-topics">
+                <div class="comm-topic-tag" onclick="commFilter('all',document.querySelector('.comm-tab'))">#Lighting</div>
+                <div class="comm-topic-tag">#Color Grading</div>
+                <div class="comm-topic-tag">#Camera Movement</div>
+                <div class="comm-topic-tag">#Editing</div>
+                <div class="comm-topic-tag">#Sound Design</div>
+                <div class="comm-topic-tag">#Directing</div>
+                <div class="comm-topic-tag">#Indie Film</div>
+                <div class="comm-topic-tag">#Gear</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           DOWNLOADS
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-downloads">
+        <div class="dl-header animate-up">
+          <div class="dl-eyebrow">Your Resources</div>
+          <h1 class="dl-title">Downloads</h1>
+          <p class="dl-subtitle">Access all course materials and resources in one place</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="dl-stats animate-up delay-1">
+          <div class="dl-stat s-purple">
+            <div class="dl-stat-icon purple"><i class="fa-solid fa-download"></i></div>
+            <div class="dl-stat-num purple"><span class="dl-count" data-target="8">0</span></div>
+            <div class="dl-stat-label">Total Downloads</div>
+          </div>
+          <div class="dl-stat s-teal">
+            <div class="dl-stat-icon teal"><i class="fa-regular fa-file"></i></div>
+            <div class="dl-stat-num teal"><span id="dlSizeNum">1974.7</span></div>
+            <div class="dl-stat-label">MB Total Size</div>
+          </div>
+          <div class="dl-stat s-gold">
+            <div class="dl-stat-icon gold"><i class="fa-regular fa-folder-open"></i></div>
+            <div class="dl-stat-num gold"><span class="dl-count" data-target="12">0</span></div>
+            <div class="dl-stat-label">Active Courses</div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="dl-toolbar animate-up delay-2">
+          <div class="dl-filter-tabs">
+            <button class="dl-tab active" onclick="dlFilter('all',this)"><i class="fa-solid fa-bars-staggered"></i> All Files</button>
+            <button class="dl-tab" onclick="dlFilter('pdf',this)"><i class="fa-regular fa-file-pdf"></i> PDFs</button>
+            <button class="dl-tab" onclick="dlFilter('zip',this)"><i class="fa-regular fa-file-zipper"></i> Archives</button>
+          </div>
+          <div class="dl-spacer"></div>
+          <div class="dl-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input class="dl-search" id="dlSearch" type="text" placeholder="Search files…" oninput="dlSearch(this.value)"/>
+          </div>
+        </div>
+
+        <!-- File list -->
+        <div class="dl-list animate-up delay-3" id="dlList"></div>
+      </div>
+        
+      <!-- ══════════════════════════════════════════════
+           Settings Page
+      ══════════════════════════════════════════════ -->
+      <div class="page" id="page-settings">
+          <div class="dl-header animate-up">
+          <div class="dl-eyebrow">Settings</div>
+          <h1 class="dl-title">Settings</h1>
+          <p class="dl-subtitle">Manage your account and preferences</p>
+          <div class="settings-container">
+    
+    <div class="settings-tabs">
+      <button class="s-tab-btn active" onclick="switchSettingsTab(event, 's-profile')">
+        <i class="fa-solid fa-user"></i> <span>Profile</span>
+      </button>
+      <button class="s-tab-btn" onclick="switchSettingsTab(event, 's-security')">
+        <i class="fa-solid fa-shield-halved"></i> <span>Security</span>
+      </button>
+      <button class="s-tab-btn" onclick="switchSettingsTab(event, 's-notifications')">
+        <i class="fa-solid fa-bell"></i> <span>Notifications</span>
+      </button>
+      <button class="s-tab-btn" onclick="switchSettingsTab(event, 's-preferences')">
+        <i class="fa-solid fa-sliders"></i> <span>Preferences</span>
+      </button>
+    </div>
+
+    <div class="settings-content">
+      <div id="s-profile" class="s-panel active">
+        <h3 class="panel-title">Profile Settings</h3>
+        <p class="panel-subtitle">Update your personal information and public profile details.</p>
+        <hr class="panel-divider">
+        
+        <div class="profile-avatar-section">
+          <div class="avatar-preview-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" id="settings-avatar-img">
+            <label for="avatar-upload" class="avatar-edit-badge" title="Change Avatar">
+              <i class="fa-solid fa-camera"></i>
+            </label>
+            <input type="file" id="avatar-upload" style="display:none;" accept="image/*" onchange="previewAvatar(event)">
+          </div>
+          <div>
+            <h4 style="color:#fff; font-weight:600; margin-bottom:4px;">Your Avatar</h4>
+            <p style="color:rgba(255,255,255,0.4); font-size:12px;">PNG, JPG or WEBP. Max 2MB.</p>
+          </div>
+        </div>
+
+        <div class="settings-form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" value="Alex">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" value="Morgan">
+          </div>
+          <div class="form-group col-span-2">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" value="alex.morgan@cinematic.academy">
+          </div>
+          <div class="form-group col-span-2">
+            <label class="form-label">Biography</label>
+            <textarea class="form-input rows-3" placeholder="Tell us about your filmmaking journey..."></textarea>
+          </div>
+        </div>
+        
+        <div class="settings-actions">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-save" onclick="showToast('fa-floppy-disk', 'Profile changes saved successfully!')">Save Changes</button>
+        </div>
+      </div>
+
+      <div id="s-security" class="s-panel">
+        <h3 class="panel-title">Security & Password</h3>
+        <p class="panel-subtitle">Manage your login credentials and secure your account access parameters.</p>
+        <hr class="panel-divider">
+        
+        <div class="settings-form-grid">
+          <div class="form-group col-span-2">
+            <label class="form-label">Current Password</label>
+            <input type="password" class="form-input" placeholder="••••••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-input" placeholder="Min. 8 characters">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" class="form-input" placeholder="Repeat password">
+          </div>
+        </div>
+
+        <div class="security-card">
+          <div class="security-card-icon"><i class="fa-solid fa-key"></i></div>
+          <div class="security-card-info">
+            <h4>Two-Factor Authentication (2FA)</h4>
+            <p>Add an extra layer of structural protection to your account settings.</p>
+          </div>
+          <button class="btn-secondary" style="margin-left: auto;">Enable</button>
+        </div>
+        
+        <div class="settings-actions">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-save" onclick="showToast('fa-lock', 'Password updated successfully!')">Update Password</button>
+        </div>
+      </div>
+
+      <div id="s-notifications" class="s-panel">
+        <h3 class="panel-title">Notification Channels</h3>
+        <p class="panel-subtitle">Choose exactly when and how you want to receive active system alerts.</p>
+        <hr class="panel-divider">
+        
+        <div class="toggle-row">
+          <div>
+            <h4 class="toggle-title">Email Progress Digests</h4>
+            <p class="toggle-desc">Receive weekly metrics summarizing completed lectures and milestones.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <h4 class="toggle-title">New Course Announcements</h4>
+            <p class="toggle-desc">Get updated directly whenever masterclasses are published by global instructors.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <h4 class="toggle-title">Community Comment & Reply Alerts</h4>
+            <p class="toggle-desc">Notify me whenever a student replies to my posted timeline assignment questions.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="settings-actions">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-save" onclick="showToast('fa-bell', 'Notification preferences saved!')">Save Preferences</button>
+        </div>
+      </div>
+
+      <div id="s-preferences" class="s-panel">
+        <h3 class="panel-title">Interface Preferences</h3>
+        <p class="panel-subtitle">Tailor the rendering parameters of your dashboard workspace layout viewport.</p>
+        <hr class="panel-divider">
+        
+        <div class="settings-form-grid">
+          <div class="form-group">
+            <label class="form-label">Default Playback Quality</label>
+            <select class="form-input select-styled">
+              <option>Auto (Recommended)</option>
+              <option>4K Ultra HD</option>
+              <option>1080p Full HD</option>
+              <option>720p HD</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Primary UI Language</label>
+            <select class="form-input select-styled">
+              <option>English (US)</option>
+              <option>Español</option>
+              <option>Français</option>
+              <option>Deutsch</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toggle-row" style="margin-top: 20px;">
+          <div>
+            <h4 class="toggle-title">Autoplay Upcoming Lessons</h4>
+            <p class="toggle-desc">Automatically boot subsequent curricular timeline videos when current unit concludes.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="settings-actions">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-save" onclick="showToast('fa-gear', 'Interface settings updated!')">Apply Preferences</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+  const CURRENT_USER = {
+    name: "{{ request.user.get_full_name|default:request.user.username }}",
+    initials: "{{ request.user.first_name.0|upper }}{{ request.user.last_name.0|upper }}",
+    email: "{{ request.user.email }}",
+  };
+  const CSRF_TOKEN = "{{ csrf_token }}";
+  const LOGOUT_URL = "{% url 'logout' %}";
+ // Expose the initial course’s curriculum to the front‑end immediately
+  window.initialCourse = {{ current_course_json|safe }};
+   // List of every enrolled course ID – used by the “My Courses” panel
+  window.enrolled_ids = {{ enrolled_ids_json|safe }};
+</script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
