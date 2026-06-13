@@ -9,27 +9,33 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
+from decouple import config
+import dj_database_url
 from pathlib import Path
-import environ
+# import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(BASE_DIR / '.env')
+# env = config(DEBUG=(bool, False))
+# config.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
-
-
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"] if RENDER_EXTERNAL_HOSTNAME else []
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
      "allauth.account.middleware.AccountMiddleware",   # REQUIRED by allauth
+     'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'video_academy.urls'
@@ -87,13 +94,12 @@ WSGI_APPLICATION = 'video_academy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -188,15 +194,15 @@ SOCIALACCOUNT_PROVIDERS = {
 
         "OAUTH_PKCE_ENABLED": True,
 
-        "APP": {
+        # "APP": {
 
-            "client_id": env("GOOGLE_CLIENT_ID"),
+        #     "client_id": config("GOOGLE_CLIENT_ID"),
 
-            "secret": env("GOOGLE_CLIENT_SECRET"),
+        #     "secret": config("GOOGLE_CLIENT_SECRET"),
 
-            "key": "",
+        #     "key": "",
 
-        },
+        # },
 
     }
 
@@ -219,8 +225,8 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # ── PayPal ────────────────────────────────────────────────────
 
-PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID")
-PAYPAL_SECRET = env("PAYPAL_SECRET")
-PAYPAL_MODE = env("PAYPAL_MODE", default="sandbox")
-PAYPAL_CURRENCY = env("PAYPAL_CURRENCY", default="USD")
-SITE_URL = env("SITE_URL")
+PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID")
+PAYPAL_SECRET = config("PAYPAL_SECRET")
+PAYPAL_MODE = config("PAYPAL_MODE", default="sandbox")
+PAYPAL_CURRENCY = config("PAYPAL_CURRENCY", default="USD")
+SITE_URL = config("SITE_URL")
