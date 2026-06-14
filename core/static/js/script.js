@@ -8,12 +8,12 @@ const { animate, scroll, inView, stagger } = Motion;
 const EASE_CINEMATIC = [0.16, 1, 0.3, 1];
 const EASE_BACK = [0.34, 1.56, 0.64, 1];
 
-document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const show = params.get('show');
-    if (show === 'login') openCheckout('Academy Membership', 199);
-    if (show === 'payment') openCheckout('Academy Membership', 199);
-  });
+// document.addEventListener('DOMContentLoaded', () => {
+//     const params = new URLSearchParams(window.location.search);
+//     const show = params.get('show');
+//     if (show === 'login') openCheckout('Academy Membership', 199);
+//     if (show === 'payment') openCheckout('Academy Membership', 199);
+//   });
 /* ══════════════════════════════════
    1. PRELOADER
 ══════════════════════════════════ */
